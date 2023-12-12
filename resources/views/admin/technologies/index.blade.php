@@ -4,11 +4,12 @@
 
     <h1 class="fw-bold">Index Technologies</h1>
 
-    <form class="col-5" action="{{ route('admin.technologies.store') }}" method="POST">
+    <form class="col-8" action="{{ route('admin.technologies.store') }}" method="POST">
         @csrf
         <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="New Tecnology" name="name">
             <input type="text" class="form-control" placeholder="Link documantation" name="link">
+            <input type="file" class="form-control" name="logo">
             <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Create</button>
         </div>
     </form>
@@ -36,7 +37,9 @@
                           @method('PUT')
                           <input type="text" class="form-cst w-25" value="{{ $technology->name }}" name="name">
 
-                          <input type="text" class="w-50" value="{{ $technology->link }}" name="link">
+                          <input type="text" class="w-25" value="{{ $technology->link }}" name="link">
+
+                          <input type="file" class="form-cst w-25" value="{{ $technology->logo }}" name="logo">
 
                           <button onclick="submitForm({{ $technology->id }})" class="btn btn-warning">Send</button>
                         </form>

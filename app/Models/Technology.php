@@ -17,7 +17,8 @@ class Technology extends Model
     protected $fillable = [
         'name',
         'slug',
-        'link'
+        'link',
+        'logo'
     ];
 
 

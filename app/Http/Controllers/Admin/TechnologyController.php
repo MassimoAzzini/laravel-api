@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Technology;
 use App\Functions\Helper;
 use App\Models\Project;
+use Illuminate\Support\Facades\Storage;
+
 
 class TechnologyController extends Controller
 {
@@ -50,6 +52,11 @@ class TechnologyController extends Controller
             $new_technology = new Technology();
             $new_technology->name = $request->name;
             $new_technology->link = $request->link;
+            $new_technology->logo = $request->logo;
+            if($request->logo){
+                $new_technology->logo = Storage::put('uploads', $request->logo);
+            }
+
             $new_technology->slug = Helper::generateSlug($request->name, Technology::class);
             $new_technology->save();
             return redirect()->route('admin.technologies.index')->with('success', 'Technology created');
@@ -89,7 +96,8 @@ class TechnologyController extends Controller
     {
         $val_edit_data = $request->validate([
             'name' =>'required|max:50',
-            'link' =>'max:255'
+            'link' =>'max:255',
+            'logo' =>'max:255'
         ]);
 
         $exist = Technology::where('name', $request->name)->first();
@@ -98,6 +106,15 @@ class TechnologyController extends Controller
         }
 
         $val_edit_data['slug'] = Helper::generateSlug($request->name, Technology::class);
+
+        if($request->logo){
+            if($technology->logo){
+                Storage::disk('public')->delete($technology->logo);
+            }
+
+            $val_edit_data['logo'] = Storage::put('uploads', $val_edit_data['logo']);
+        }
+
 
         $technology->update($val_edit_data);
 

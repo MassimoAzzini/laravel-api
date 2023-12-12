@@ -37,9 +37,11 @@
         <div class="col">
             <strong>Technology: </strong>
                 @forelse ($project->technologies as $technology)
-                    <a href="{{ route('admin.project-technology', $technology) }}" class="badge text-bg-info text-decoration-none">{{ $technology->name }}</a>
+                    <a class="text-decoration-none" href="{{ route('admin.project-technology', $technology) }}">
+                        <img class="mx-1" style="max-height: 20px" src="{{asset('storage/uploads/' . $technology->logo)}}" alt="{{$technology->name}}" title="{{$technology->name}}">
+                    </a>
                 @empty
-                -
+                    -
                 @endforelse
 
         </div>
